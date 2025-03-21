@@ -2,7 +2,7 @@
 # godot_await
 
 A simple wrapper for awaiting Godot built-in signals in an async context.  
-It only uses `godot`.
+It only uses [`godot`](https://crates.io/crates/godot).
 
 ## Examples
 
@@ -16,15 +16,13 @@ Using `godot_await`:
 
 Equivalent to:
 
-GDScript
-
 ```php
+  // GDScript
   await get_tree().create_timer(1.0).timeout 
 ```
 
-Rust
-
 ```rust  
+  // Rust
   let timer = Engine::singleton().get_main_loop().unwrap().cast().unwrap().create_timer(1.0);
   Signal::from_object_signal(&timer, "timeout").to_future::<()>().await
 ```
@@ -39,15 +37,13 @@ Using `godot_await`:
 
 Equivalent to
 
-GDScript
-
 ```php
+  // GDScript
   await tween.finished
 ```
 
-Rust
-
 ```rust
+  // Rust
   let signal =  Signal::from_object_signal(self, "finished");
   signal.to_future::<()>().await;
 ```

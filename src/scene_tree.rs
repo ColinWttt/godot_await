@@ -23,17 +23,19 @@ impl<T> SceneTreeExt<T> for Gd<T>
 where
     T: Inherits<SceneTree>,
 {
+    #[inline]
     fn physics_frame(&self) -> SignalFuture<()> {
         Signal::from_object_signal(self, "physics_frame").to_future::<()>()
     }
+    #[inline]
     fn process_frame(&self) -> SignalFuture<()> {
         Signal::from_object_signal(self, "process_frame").to_future::<()>()
     }
-
+    #[inline]
     fn tree_changed(&self) -> SignalFuture<()> {
         Signal::from_object_signal(self, "tree_changed").to_future::<()>()
     }
-
+    #[inline]
     fn tree_process_mode_changed(&self) -> SignalFuture<()> {
         Signal::from_object_signal(self, "tree_process_mode_changed").to_future::<()>()
     }
