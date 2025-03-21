@@ -44,7 +44,7 @@ Equivalent to
 
 ```rust
   // Rust
-  let signal =  Signal::from_object_signal(self, "finished");
+  let signal = Signal::from_object_signal(&tween, "finished");
   signal.to_future::<()>().await;
 ```
 
