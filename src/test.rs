@@ -5,6 +5,6 @@ use godot::{
 
 use crate::{tween::TweenExt, *};
 
-fn test(gd: Gd<Tween>) {
+fn test(gd: &Gd<Tween>) {
     gd.loop_finished();
 }

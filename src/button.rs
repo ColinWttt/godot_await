@@ -1,6 +1,6 @@
 use godot::classes::BaseButton;
 
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture, FallibleSignalFuture};
 
 pub trait BaseButtonExt<T>
 where
@@ -13,10 +13,10 @@ where
     /// Emitted when the button was just toggled between pressed and normal states (only if `toggle_mode` is active).
     /// The new state is contained in the `toggled_on` argument.
     /// # Return
-    /// (toggled_on: bool,)
+    /// (`toggled_on`: bool,)
     fn toggled(&self) -> SignalFuture<(bool,)>;
     /// Emitted when the button is toggled or pressed.
-    /// This is on `button_down` if `action_mode` is `ACTION_MODE_BUTTON_PRESS` and on button_up otherwise.
+    /// This is on `button_down` if `action_mode` is `ACTION_MODE_BUTTON_PRESS` and on `button_up` otherwise.
     /// If you need to know the button's pressed state (and `toggle_mode` is active), use `button_toggled` instead.
     fn pressed(&self) -> SignalFuture<()>;
     /// `button_up`fallible

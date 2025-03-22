@@ -1,6 +1,6 @@
 use godot::classes::Viewport;
 
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture};
 //todo
 // gui_focus_changed
 

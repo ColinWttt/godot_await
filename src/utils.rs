@@ -1,6 +1,5 @@
 use godot::classes::{Engine, SceneTree};
-
-use crate::*;
+use godot::obj::Gd;
 
 #[inline]
 pub(crate) fn godot_tree() -> Gd<SceneTree> {

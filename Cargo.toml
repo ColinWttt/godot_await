@@ -4,6 +4,8 @@ version = "0.0.1-dev"
 edition = "2024"
 description = "A simple signals wrapper for built-in Godot classes."
 keywords = ["game", "godot"]
+categories = ["game-development","asynchronous"]
+readme = "README.md"
 repository ="https://github.com/ColinWttt/godot-await"
 license = "MIT OR Apache-2.0"
 

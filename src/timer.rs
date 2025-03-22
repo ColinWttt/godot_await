@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture, FallibleSignalFuture};
 use godot::classes::Timer;
 
 pub trait TimerExt<T>

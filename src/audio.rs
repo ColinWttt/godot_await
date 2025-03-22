@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture};
 use godot::classes::{AudioStreamPlayer, AudioStreamPlayer2D, AudioStreamPlayer3D, Node};
 
 trait AudioStreamPlayerSignal: Inherits<Node> {}

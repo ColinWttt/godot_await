@@ -1,8 +1,9 @@
+use godot::builtin::Signal;
 use godot::classes::SceneTree;
 use godot::classes::scene_tree::ExCreateTimer;
+use godot::task::SignalFuture;
 
 use crate::utils::godot_tree;
-use crate::*;
 
 /// Builder for creating configurable wait timers
 pub struct ExWaitBuilder<'a>(ExCreateTimer<'a>);
@@ -35,9 +36,15 @@ impl ExWaitBuilder<'_> {
     ///
     /// # Returns
     /// A future that will resolve when the timer times out
+    /// # Panics
+    ///
+    /// Will panic if create `SceneTreeTimer` failed
     #[inline]
     pub fn done(self) -> SignalFuture<()> {
-        let timer = self.0.done().unwrap();
+        let timer = self
+            .0
+            .done()
+            .expect("ERR(godot-await):create SceneTreeTimer failed");
         Signal::from_object_signal(&timer, "timeout").to_future::<()>()
     }
 }
@@ -78,6 +85,9 @@ pub fn wait_ex(tree: &mut SceneTree, time_sec: f64) -> ExWaitBuilder<'_> {
 /// //in async
 /// wait(3.0).await
 /// ```
+/// # Panics
+///
+/// Will panic if get `MainLoop` or cast `SceneTree` failed
 #[inline]
 pub fn wait(time_sec: f64) -> SignalFuture<()> {
     wait_ex(&mut godot_tree(), time_sec).done()

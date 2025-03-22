@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture};
 use godot::classes::SceneTree;
 
 pub trait SceneTreeExt<T> {
@@ -8,13 +8,13 @@ pub trait SceneTreeExt<T> {
     //node_removed
     //node_renamed
 
-    /// Emitted immediately before Node._physics_process() is called on every node in this tree.
+    /// Emitted immediately before `Node._physics_process()` is called on every node in this tree.
     fn physics_frame(&self) -> SignalFuture<()>;
-    /// Emitted immediately before `Node._process()`` is called on every node in this tree.
+    /// Emitted immediately before `Node._process()` is called on every node in this tree.
     fn process_frame(&self) -> SignalFuture<()>;
     /// Emitted any time the tree's hierarchy changes (nodes being moved, renamed, etc.).
     fn tree_changed(&self) -> SignalFuture<()>;
-    /// Emitted when the Node.process_mode of any node inside the tree is changed.
+    /// Emitted when the `Node.process_mode` of any node inside the tree is changed.
     /// Only emitted in the editor, to update the visibility of disabled nodes.
     fn tree_process_mode_changed(&self) -> SignalFuture<()>;
 }

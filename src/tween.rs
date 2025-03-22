@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture, FallibleSignalFuture};
 use godot::classes::Tween;
 
 pub trait TweenExt<T>
@@ -17,10 +17,10 @@ where
     fn step_finished(&self) -> SignalFuture<(i64,)>;
     fn step_finished_fallible(&self) -> FallibleSignalFuture<(i64,)>;
 
-    /// Emitted when a full loop is complete (see set_loops()), providing the loop index.
+    /// Emitted when a full loop is complete (see `set_loops()`), providing the loop index.
     /// This signal is not emitted after the final loop, use `tween_finished` instead for this case.
     /// # Retruns
-    /// (loop_count: i64, )
+    /// (`loop_count`: i64, )
     fn loop_finished(&self) -> SignalFuture<(i64,)>;
     fn loop_finished_fallible(&self) -> FallibleSignalFuture<(i64,)>;
 }

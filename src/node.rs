@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{Gd, Inherits, Signal, SignalFuture};
 use godot::classes::Node;
 
 pub trait NodeExt<T>
