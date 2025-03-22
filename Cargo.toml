@@ -9,7 +9,17 @@ readme = "README.md"
 repository = "https://github.com/ColinWttt/godot-await"
 license = "MIT OR Apache-2.0"
 
+[workspace]
+resolver = "2"
+members = [
+    # Godot integration
+    "itest/rust",
+    "itest/repo-tweak",
+]
 
 [dependencies]
 # godot = "0.3"
 godot = { git = "https://github.com/godot-rust/gdext" }
+
+[package.metadata.docs.rs]
+cargo-args = ["--no-deps"]

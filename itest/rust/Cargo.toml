@@ -1,0 +1,24 @@
+[package]
+name = "itest"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = ["codegen-full"]
+codegen-full = ["godot/__codegen-full"]
+
+# Do not add features here that are 1:1 forwarded to the `godot` crate, unless they are needed by itest itself.
+# Instead, compile itest with `--features godot/my-feature`.
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", default-features = false, features = ["__trace"] }
+
+[build-dependencies]
+godot-bindings = { git = "https://github.com/godot-rust/gdext" } # emit_godot_version_cfg
+repo-tweak = { path = "../repo-tweak" }
