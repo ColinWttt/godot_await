@@ -5,8 +5,8 @@ pub trait TweenExt<T>
 where
     T: Inherits<Tween>,
 {
-    // Emitted when the Tween has finished all tweening.
-    // Never emitted when the Tween is set to infinite looping (see set_loops()).
+    /// Emitted when the Tween has finished all tweening.
+    /// Never emitted when the Tween is set to infinite looping (see set_loops()).
     fn finished(&self) -> SignalFuture<()>;
     fn finished_fallible(&self) -> FallibleSignalFuture<()>;
 

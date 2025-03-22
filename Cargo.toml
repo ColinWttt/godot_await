@@ -2,14 +2,14 @@
 name = "godot_await"
 version = "0.0.1-dev"
 edition = "2024"
-description = "A simple signals wrapper for built-in Godot classes."
+description = "A simple wrapper for awaiting Godot built-in signals"
 keywords = ["game", "godot"]
-categories = ["game-development","asynchronous"]
+categories = ["game-development", "asynchronous"]
 readme = "README.md"
-repository ="https://github.com/ColinWttt/godot-await"
+repository = "https://github.com/ColinWttt/godot-await"
 license = "MIT OR Apache-2.0"
 
 
 [dependencies]
 # godot = "0.3"
-godot= { git = "https://github.com/godot-rust/gdext"  }
+godot = { git = "https://github.com/godot-rust/gdext" }

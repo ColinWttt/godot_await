@@ -4,6 +4,16 @@
 A simple wrapper for awaiting Godot built-in signals in an async context.  
 It only uses [`godot`](https://crates.io/crates/godot).
 
+## Usage
+
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+godot_await =  { git = "https://github.com/ColinWttt/godot_await"}
+
+```
+
 ## Examples
 
 ### Wait for a Duration  
