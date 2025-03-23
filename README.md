@@ -71,7 +71,7 @@ These function returns `SignalFuture<(...)>`, allowing you to await them togethe
 
 Function names with the `_fallible` suffix return `FallibleSignalFuture<(...)>`.
 
-   >`FallibleSignalFuture`:The future might resolve to an error if the signal object is freed before the signal is emitted.[gdext repo](https://github.com/godot-rust/gdext/blob/master/godot-core/src/task/futures.rs#L166)
+   >`FallibleSignalFuture`:The future might resolve to an error if the signal object is freed before the signal is emitted.[gdext repo](https://github.com/godot-rust/gdext/blob/62a7381b3b297038b053ab63b1ad87997f6cc1e2/godot-core/src/task/futures.rs#L166)
 
 ```rust
     task::spawn(async move {
