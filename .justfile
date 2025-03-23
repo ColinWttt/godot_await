@@ -1,6 +1,8 @@
+set windows-shell := ["cmd", "/C"]
+
 build:
-    cargo fmt && cargo build
+    cd godot_await && cargo fmt && cargo build
 publish:
-    cargo publish --registry crates-io
+    cd godot_await && cargo publish --registry crates-io
 clippy-s:
-    cargo clippy --all-targets -- -W clippy::all -W clippy::pedantic -W clippy::nursery -W clippy::cargo
+    cd godot_await && cargo clippy --all-targets -- -W clippy::all -W clippy::pedantic -W clippy::nursery -W clippy::cargo
