@@ -60,11 +60,11 @@ Equivalent to
 
 ### Wait for multiple signals
 
-These function returns `SignalFuture<(...)>`, allowing you to await them together.
+These functions returns `SignalFuture<(...)>`, allowing you to await them together.
 
 ```rust
-  //with future-rs
-  join!(timer.timeout(1.0, tween.finished()))
+  // with future-rs
+  join!(timer.timeout(), tween.finished());
 ```
 
 ### The `_fallible` suffix
