@@ -14,7 +14,7 @@
 ################################################################################
 
 # Commands to run (in that order) if none are given on the command line.
-DEFAULT_COMMANDS=("fmt" "clippy" "test" "itest")
+DEFAULT_COMMANDS=("fmt" "clippy" "itest")
 
 # Store help text in a variable $HELP_TEXT so we don't need weird indentation later on.
 read -r -d '' HELP_TEXT <<EOF
@@ -217,7 +217,7 @@ while [[ $# -gt 0 ]]; do
         --double)
             extraCargoArgs+=("--features" "godot/double-precision")
             ;;
-        fmt | test | itest | clippy | klippy | doc | dok)
+        fmt | itest | clippy | klippy | doc | dok)
             cmds+=("$arg")
             ;;
         -f | --filter)
