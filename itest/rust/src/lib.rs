@@ -9,6 +9,7 @@ use godot::init::{gdextension, ExtensionLibrary};
 
 mod engine_tests;
 mod framework;
+mod godot_await;
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------
 // Entry point
