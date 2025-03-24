@@ -2,7 +2,7 @@
 # godot_await
 
 A simple wrapper for awaiting Godot built-in signals in an async context.  
-It only uses [`godot`](https://crates.io/crates/godot).
+It only depends on [`godot`](https://crates.io/crates/godot).
 
 ## Usage
 
@@ -32,9 +32,13 @@ Equivalent to:
 ```
 
 ```rust  
-  // Rust
-  let timer = Engine::singleton().get_main_loop().unwrap().cast().unwrap().create_timer(1.0);
-  Signal::from_object_signal(&timer, "timeout").to_future::<()>().await
+  // Rust (without godot_await)
+  let timer = Engine::singleton()
+      .get_main_loop().unwrap()
+      .cast::<SceneTree>().unwrap()
+      .create_timer(1.0);
+  let signal = Signal::from_object_signal(&timer, "timeout");
+  signal.to_future::<()>().await;
 ```
 
 ### Wait for tween finished
@@ -53,7 +57,7 @@ Equivalent to
 ```
 
 ```rust
-  // Rust
+  // Rust (without godot_await)
   let signal = Signal::from_object_signal(&tween, "finished");
   signal.to_future::<()>().await;
 ```
@@ -63,7 +67,7 @@ Equivalent to
 These functions returns `SignalFuture<(...)>`, allowing you to await them together.
 
 ```rust
-  // with future-rs
+  // Using future-rs
   join!(timer.timeout(), tween.finished());
 ```
 
