@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-use futures::join;
+use futures::{join, pin_mut, select, FutureExt};
 
 use godot::classes::{Button, Engine, Node, Node2D, RefCounted, SceneTree};
 use godot::meta::ToGodot;
@@ -44,15 +44,17 @@ fn get_tree() -> Gd<SceneTree> {
 fn wait_test() -> TaskHandle {
     task::spawn(async move {
         let start = Instant::now();
-        wait(0.01).await;
-        assert!((Instant::now() - start).as_secs_f64() > 0.009);
+        wait(0.02).await;
+        // println!("wait elasp sec:{}", (Instant::now() - start).as_secs_f64());
+        assert!((Instant::now() - start).as_secs_f64() >= 0.02);
 
         let start = Instant::now();
-        wait_ex(&mut get_tree(), 0.01)
+        wait_ex(&mut get_tree(), 0.02)
             .process_always(false)
             .done()
             .await;
-        assert!((Instant::now() - start).as_secs_f64() > 0.009);
+        // println!( "wait_ex elasp sec:{}",(Instant::now() - start).as_secs_f64());
+        assert!((Instant::now() - start).as_secs_f64() >= 0.02);
     })
 }
 
@@ -99,20 +101,33 @@ fn button_test() -> TaskHandle {
     let button_ref = button.clone();
 
     let task_handle = task::spawn(async move {
-        let ret = join!(
-            button_ref.button_down(),
-            button_ref.button_up(),
-            button_ref.pressed(),
-            button_ref.toggled(),
-        );
+        let fut_1 = async {
+            join!(
+                button_ref.button_down(),
+                button_ref.button_up(),
+                button_ref.pressed(),
+                button_ref.toggled(),
+            )
+        }
+        .fuse();
 
-        assert_eq!(ret, ((), (), (), (true,)))
+        let fut_2 = wait(0.5).fuse();
+        pin_mut!(fut_1); // Pins the Future on the stack
+        pin_mut!(fut_2); // Pins the Future on the stack
+
+        select! {
+            ret= fut_1 =>{
+                assert_eq!(ret, ((), (), (), (true,)))
+            }
+                ,
+            _ = fut_2 => panic!("test wait exceed"),
+        };
     });
 
     button.emit_signal("button_down", &[]);
     button.emit_signal("button_up", &[]);
     button.emit_signal("toggled", &[true.to_variant()]);
-    button.emit_signal("pressed", &[]);
+    // button.emit_signal("pressed", &[]);
 
     task_handle
 }
