@@ -36,7 +36,7 @@ Equivalent to:
   let timer = Engine::singleton()
       .get_main_loop().unwrap()
       .cast::<SceneTree>().unwrap()
-      .create_timer(1.0);
+      .create_timer(1.0).unwrap();
   let signal = Signal::from_object_signal(&timer, "timeout");
   signal.to_future::<()>().await;
 ```
