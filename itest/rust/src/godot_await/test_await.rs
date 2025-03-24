@@ -127,7 +127,7 @@ fn button_test() -> TaskHandle {
     button.emit_signal("button_down", &[]);
     button.emit_signal("button_up", &[]);
     button.emit_signal("toggled", &[true.to_variant()]);
-    // button.emit_signal("pressed", &[]);
+    button.emit_signal("pressed", &[]);
 
     task_handle
 }
