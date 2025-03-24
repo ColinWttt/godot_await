@@ -58,6 +58,30 @@ Equivalent to
   signal.to_future::<()>().await;
 ```
 
+### Wait for multiple signals
+
+These functions returns `SignalFuture<(...)>`, allowing you to await them together.
+
+```rust
+  // with future-rs
+  join!(timer.timeout(), tween.finished());
+```
+
+### The `_fallible` suffix
+
+Function names with the `_fallible` suffix return `FallibleSignalFuture<(...)>`.
+
+   >`FallibleSignalFuture`:The future might resolve to an error if the signal object is freed before the signal is emitted.[gdext repo](https://github.com/godot-rust/gdext/blob/62a7381b3b297038b053ab63b1ad87997f6cc1e2/godot-core/src/task/futures.rs#L166)
+
+```rust
+    task::spawn(async move {
+        let result = button.pressed_fallible().await;
+        assert!(result.is_err());
+    });
+
+    button.call_deferred("free", &[]);
+```
+
 ## License
 
 Licensed under either of
