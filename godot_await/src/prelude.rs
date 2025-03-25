@@ -1,4 +1,4 @@
-//! Traits [`BaseButtonExt`], [`NodeExt`], [`SceneTreeExt`], [`TimerExt`], [`TweenExt`].
+//! Traits `BaseButtonExt`, `NodeExt`, `SceneTreeExt`, `TimerExt`, `TweenExt`.
 //!
 //! # Examples
 //!
@@ -8,12 +8,8 @@
 
 #[doc(no_inline)]
 pub use crate::{
-    audio::AudioStreamPlayerExt as _,
-    base_button::BaseButtonExt as _,
-    node::NodeExt as _,
-    scene_tree::SceneTreeExt as _,
-    timer::TimerExt as _,
-    tween::TweenExt as _,
+    audio::AudioStreamPlayerExt as _, base_button::BaseButtonExt as _, node::NodeExt as _,
+    scene_tree::SceneTreeExt as _, timer::TimerExt as _, tween::TweenExt as _,
 };
 
 pub use crate::wait::{wait, wait_ex};
