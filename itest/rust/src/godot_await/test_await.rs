@@ -8,10 +8,8 @@ use godot::obj::{Base, Gd, NewAlloc};
 use godot::prelude::{godot_api, GodotClass};
 use godot::task;
 use godot::task::TaskHandle;
-use godot_await::button::BaseButtonExt;
-use godot_await::node::NodeExt;
 
-use godot_await::{wait, wait_ex};
+use godot_await::prelude::*;
 
 use crate::framework::{itest, TestContext};
 
