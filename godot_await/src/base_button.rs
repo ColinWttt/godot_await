@@ -1,6 +1,5 @@
-use godot::classes::BaseButton;
-
 use crate::{FallibleSignalFuture, Gd, Inherits, Signal, SignalFuture};
+use godot::classes::BaseButton;
 
 pub trait BaseButtonExt<T>
 where

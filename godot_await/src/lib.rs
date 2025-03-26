@@ -3,6 +3,7 @@ pub mod base_button;
 pub mod node;
 pub mod scene_tree;
 // mod test;
+pub mod animated_sprite;
 pub mod prelude;
 pub mod timer;
 pub mod tween;
