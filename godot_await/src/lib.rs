@@ -1,5 +1,5 @@
-#[cfg(feature = "zip_or")]
-pub mod futures;
+#[cfg(feature = "future")]
+pub mod future;
 pub mod prelude;
 mod utils;
 pub mod wait;

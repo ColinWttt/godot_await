@@ -11,5 +11,6 @@ pub use crate::classes::{
     audio::AudioStreamPlayerExt as _, base_button::BaseButtonExt as _, node::NodeExt as _,
     scene_tree::SceneTreeExt as _, timer::TimerExt as _, tween::TweenExt as _,
 };
-
+#[cfg(feature = "future")]
+pub use crate::future::{Future, FutureExt as _};
 pub use crate::wait::{wait, wait_ex};

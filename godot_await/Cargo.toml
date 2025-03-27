@@ -10,7 +10,7 @@ repository = "https://github.com/ColinWttt/godot-await"
 license = "MIT OR Apache-2.0"
 
 [features]
-zip_or = ["pin-project-lite"]
+future = ["pin-project-lite"]
 
 [dependencies]
 # godot = "0.3"

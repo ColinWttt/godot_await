@@ -1,5 +1,5 @@
-#[cfg(feature = "zip_or")]
-use crate::futures::{Or, or};
+#[cfg(feature = "future")]
+use crate::future::{Or, or};
 use crate::utils::godot_tree;
 use godot::builtin::Signal;
 use godot::classes::SceneTree;
@@ -94,7 +94,7 @@ pub fn wait(time_sec: f64) -> SignalFuture<()> {
     wait_ex(&mut godot_tree(), time_sec).done()
 }
 
-#[cfg(feature = "zip_or")]
+#[cfg(feature = "future")]
 #[inline]
 pub fn wait_or(
     time_sec: f64,

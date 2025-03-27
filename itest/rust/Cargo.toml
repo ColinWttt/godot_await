@@ -20,7 +20,7 @@ codegen-full = ["godot/__codegen-full"]
 godot = { git = "https://github.com/godot-rust/gdext", default-features = false, features = [
     "__trace",
 ] }
-godot_await = { path = "../../godot_await", features = ["zip_or"] }
+godot_await = { path = "../../godot_await", features = ["future"] }
 futures-util = "0.3"
 
 [build-dependencies]
