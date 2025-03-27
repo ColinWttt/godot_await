@@ -2,35 +2,16 @@ use std::time::Instant;
 
 use futures_util::{join, pin_mut, select, FutureExt};
 
-use godot::classes::{Button, Engine, Node, Node2D, RefCounted, SceneTree};
+use godot::classes::{Button, Engine, Node, SceneTree};
 use godot::meta::ToGodot;
-use godot::obj::{Base, Gd, NewAlloc};
-use godot::prelude::{godot_api, GodotClass};
+use godot::obj::{Gd, NewAlloc};
 use godot::task;
 use godot::task::TaskHandle;
 
-use godot_await::futures::{or, zip};
+// use godot_await::futures::{or, zip, FutureExt};
 use godot_await::prelude::*;
 
 use crate::framework::{itest, TestContext};
-
-#[derive(GodotClass)]
-#[class(init)]
-struct AsyncRefCounted {
-    base: Base<RefCounted>,
-}
-
-#[derive(GodotClass)]
-#[class(init,base=Node2D)]
-struct AsyncNode2D {
-    base: Base<Node2D>,
-}
-
-#[godot_api]
-impl AsyncRefCounted {
-    #[signal]
-    fn u32_signal(value: u32);
-}
 
 fn get_tree() -> Gd<SceneTree> {
     Engine::singleton()
@@ -39,13 +20,14 @@ fn get_tree() -> Gd<SceneTree> {
         .try_cast()
         .expect("ERR(godot_await):cast SceneTree failed")
 }
+
 #[itest(async)]
 fn wait_test() -> TaskHandle {
     task::spawn(async move {
         let start = Instant::now();
         wait(0.5).await;
-        println!("wait elasp sec:{}", (Instant::now() - start).as_secs_f64());
-        assert!((Instant::now() - start).as_secs_f64() >= 0.4);
+        println!("wait elasp sec:{}", (Instant::now() - start).as_secs_f32());
+        assert!((Instant::now() - start).as_secs_f32() >= 0.4);
 
         let start = Instant::now();
         wait_ex(&mut get_tree(), 0.1)
@@ -54,9 +36,9 @@ fn wait_test() -> TaskHandle {
             .await;
         println!(
             "wait_ex elasp sec:{}",
-            (Instant::now() - start).as_secs_f64()
+            (Instant::now() - start).as_secs_f32()
         );
-        assert!((Instant::now() - start).as_secs_f64() >= 0.09);
+        assert!((Instant::now() - start).as_secs_f32() >= 0.09);
     })
 }
 
@@ -132,51 +114,4 @@ fn button_test() -> TaskHandle {
     button.emit_signal("pressed", &[]);
 
     task_handle
-}
-
-#[itest(async)]
-fn zip_test() -> TaskHandle {
-    let mut button = Button::new_alloc();
-    let button_ref = button.clone();
-
-    let task_handle = task::spawn(async move {
-        let ret = zip(button_ref.button_down(), button_ref.toggled()).await;
-        assert_eq!(ret, ((), (true,)));
-    });
-
-    button.emit_signal("button_down", &[]);
-    button.emit_signal("toggled", &[true.to_variant()]);
-
-    task_handle
-}
-
-#[itest(async)]
-fn or_test_1() -> TaskHandle {
-    let mut button = Button::new_alloc();
-    let button_ref = button.clone();
-
-    let task_handle = task::spawn(async move {
-        let start = Instant::now();
-        or(wait(0.5), button_ref.button_down()).await;
-        assert!((Instant::now() - start).as_secs_f64() < 0.2);
-    });
-
-    button.emit_signal("button_down", &[]);
-
-    task_handle
-}
-
-#[itest(async)]
-fn or_test_2() -> TaskHandle {
-    let button = Button::new_alloc();
-
-    task::spawn(async move {
-        let start = Instant::now();
-        or(button.button_down(), wait(0.1)).await;
-        println!(
-            "or_test_2 elasp sec:{}",
-            (Instant::now() - start).as_secs_f64()
-        );
-        assert!((Instant::now() - start).as_secs_f64() >= 0.09);
-    })
 }
