@@ -4,6 +4,8 @@ pub mod node;
 pub mod scene_tree;
 // mod test;
 pub mod animated_sprite;
+#[cfg(feature = "zip_or")]
+pub mod futures;
 pub mod prelude;
 pub mod timer;
 pub mod tween;

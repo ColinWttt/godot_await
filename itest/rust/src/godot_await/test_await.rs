@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-use futures::{join, pin_mut, select, FutureExt};
+use futures_util::{join, pin_mut, select, FutureExt};
 
 use godot::classes::{Button, Engine, Node, Node2D, RefCounted, SceneTree};
 use godot::meta::ToGodot;
@@ -9,6 +9,7 @@ use godot::prelude::{godot_api, GodotClass};
 use godot::task;
 use godot::task::TaskHandle;
 
+use godot_await::futures::{or, zip};
 use godot_await::prelude::*;
 
 use crate::framework::{itest, TestContext};
@@ -128,4 +129,48 @@ fn button_test() -> TaskHandle {
     button.emit_signal("pressed", &[]);
 
     task_handle
+}
+
+#[itest(async)]
+fn zip_test() -> TaskHandle {
+    let mut button = Button::new_alloc();
+    let button_ref = button.clone();
+
+    let task_handle = task::spawn(async move {
+        let ret = zip(button_ref.button_down(), button_ref.toggled()).await;
+        assert_eq!(ret, ((), (true,)));
+    });
+
+    button.emit_signal("button_down", &[]);
+    button.emit_signal("toggled", &[true.to_variant()]);
+
+    task_handle
+}
+
+#[itest(async)]
+fn or_test_1() -> TaskHandle {
+    let mut button = Button::new_alloc();
+    let button_ref = button.clone();
+
+    let task_handle = task::spawn(async move {
+        let start = Instant::now();
+        or(wait(0.5), button_ref.button_down()).await;
+        assert!((Instant::now() - start).as_secs_f64() < 0.2);
+    });
+
+    button.emit_signal("button_down", &[]);
+
+    task_handle
+}
+
+#[itest(async)]
+fn or_test_2() -> TaskHandle {
+    let button = Button::new_alloc();
+
+    task::spawn(async move {
+        let start = Instant::now();
+        or(button.button_down(), wait(0.05)).await;
+        // println!( "or_test_2 elasp sec:{}",(Instant::now() - start).as_secs_f64());
+        assert!((Instant::now() - start).as_secs_f64() >= 0.045);
+    })
 }

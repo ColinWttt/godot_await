@@ -20,8 +20,8 @@ codegen-full = ["godot/__codegen-full"]
 godot = { git = "https://github.com/godot-rust/gdext", default-features = false, features = [
     "__trace",
 ] }
-godot_await = { path = "../../godot_await" }
-futures = "0.3"
+godot_await = { path = "../../godot_await", features = ["zip_or"] }
+futures-util = "0.3"
 
 [build-dependencies]
 godot-bindings = { git = "https://github.com/godot-rust/gdext" } # emit_godot_version_cfg

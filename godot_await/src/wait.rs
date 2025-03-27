@@ -1,9 +1,10 @@
+#[cfg(feature = "zip_or")]
+use crate::futures::{Or, or};
+use crate::utils::godot_tree;
 use godot::builtin::Signal;
 use godot::classes::SceneTree;
 use godot::classes::scene_tree::ExCreateTimer;
 use godot::task::SignalFuture;
-
-use crate::utils::godot_tree;
 
 /// Builder for creating configurable wait timers
 pub struct ExWaitBuilder<'a>(ExCreateTimer<'a>);
@@ -68,7 +69,7 @@ pub fn wait_ex(tree: &mut SceneTree, time_sec: f64) -> ExWaitBuilder<'_> {
     ExWaitBuilder(timer)
 }
 
-/// Wait for a specified amount of time.  
+/// Wait for a specified amount of time.
 ///
 /// ```
 /// //similar to GDScript
@@ -91,4 +92,13 @@ pub fn wait_ex(tree: &mut SceneTree, time_sec: f64) -> ExWaitBuilder<'_> {
 #[inline]
 pub fn wait(time_sec: f64) -> SignalFuture<()> {
     wait_ex(&mut godot_tree(), time_sec).done()
+}
+
+#[cfg(feature = "zip_or")]
+#[inline]
+pub fn wait_or(
+    time_sec: f64,
+    signal_future: SignalFuture<()>,
+) -> Or<SignalFuture<()>, SignalFuture<()>> {
+    or(signal_future, wait(time_sec))
 }
