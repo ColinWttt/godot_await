@@ -5,7 +5,7 @@ edition = "2024"
 description = "A simple wrapper for awaiting Godot built-in signals"
 keywords = ["game", "godot"]
 categories = ["game-development", "asynchronous"]
-readme = "README.md"
+readme = "../README.md"
 repository = "https://github.com/ColinWttt/godot-await"
 license = "MIT OR Apache-2.0"
 
