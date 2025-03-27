@@ -1,8 +1,8 @@
 
 # godot_await
 
-A simple wrapper for awaiting Godot built-in signals in an async context.  
-It only depends on [`godot`](https://crates.io/crates/godot).
+A simple wrapper for awaiting Godot built-in signals in an async context.
+It only depends on [`godot`](https://crates.io/crates/godot) by default.
 
 ## Usage
 
@@ -16,7 +16,7 @@ godot_await =  { git = "https://github.com/ColinWttt/godot_await"}
 
 ## Examples
 
-### Wait for a Duration  
+### Wait for a Duration
 
 Using `godot_await`:
 
@@ -28,10 +28,10 @@ Equivalent to:
 
 ```php
   // GDScript
-  await get_tree().create_timer(1.0).timeout 
+  await get_tree().create_timer(1.0).timeout
 ```
 
-```rust  
+```rust
   // Rust (without godot_await)
   let timer = Engine::singleton()
       .get_main_loop().unwrap()
@@ -62,15 +62,6 @@ Equivalent to
   signal.to_future::<()>().await;
 ```
 
-### Wait for multiple signals
-
-These functions returns `SignalFuture<(...)>`, allowing you to await them together.
-
-```rust
-  // Using future-rs
-  join!(timer.timeout(), tween.finished());
-```
-
 ### The `_fallible` suffix
 
 Function names with the `_fallible` suffix return `FallibleSignalFuture<(...)>`.
@@ -84,6 +75,21 @@ Function names with the `_fallible` suffix return `FallibleSignalFuture<(...)>`.
     });
 
     button.call_deferred("free", &[]);
+```
+
+## Crate Features
+
+`godot_await` has no features enabled by default.
+
+Optionally, the following dependencies can be enabled:
+- `future` enables `zip`,`or`,`try_zip`,`wait_or`, using the [pin-project-lite](https://crates.io/crates/pin-project-lite) crate.
+```rust
+    // Joins two futures, waiting for both to complete.
+    zip(tween.finished(),timer.timeout()).await;
+    // Returns the result of the future that completes first.
+    or(button.pressed(),wait(1.0)).await;
+    // Equivalent to
+    button.pressed().or(wait(1.0)).await;
 ```
 
 ## License
