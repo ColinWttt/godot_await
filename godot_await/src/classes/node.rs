@@ -89,7 +89,7 @@ where
     }
     #[inline]
     fn replacing_by(&self) -> SignalFuture<()> {
-        Signal::from_object_signal(self, "renamed").to_future::<()>()
+        Signal::from_object_signal(self, "replacing_by").to_future::<()>()
     }
     #[inline]
     fn tree_entered(&self) -> SignalFuture<()> {
