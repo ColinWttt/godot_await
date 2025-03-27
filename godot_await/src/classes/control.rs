@@ -5,14 +5,32 @@ pub trait ControlExt<T>
 where
     T: Inherits<Control>,
 {
+    /// Emitted when the node gains focus.
     fn focus_entered(&self) -> SignalFuture<()>;
+    /// Emitted when the node loses focus.
     fn focus_exited(&self) -> SignalFuture<()>;
+    /// Emitted when the node receives an `InputEvent`.
     fn gui_input(&self) -> SignalFuture<(Gd<InputEvent>,)>;
+    /// Emitted when the node's minimum size changes.
     fn minimum_size_changed(&self) -> SignalFuture<()>;
+    /// Emitted when the mouse cursor enters the control's (or any child control's) visible area,
+    /// that is not occluded behind other Controls or Windows,
+    /// provided its mouse_filter lets the event reach it and regardless if it's currently focused or not.
+    ///
+    /// Note: CanvasItem.z_index doesn't affect, which Control receives the signal.
     fn mouse_entered(&self) -> SignalFuture<()>;
+    /// Emitted when the mouse cursor leaves the control's (and all child control's) visible area,
+    /// that is not occluded behind other Controls or Windows,
+    /// provided its mouse_filter lets the event reach it and regardless if it's currently focused or not.
+    ///
+    /// Note: `CanvasItem.z_index` doesn't affect, which Control receives the signal.
     fn mouse_exited(&self) -> SignalFuture<()>;
+    /// Emitted when the control changes size.
     fn resized(&self) -> SignalFuture<()>;
+    /// Emitted when one of the size flags changes.
+    /// See `size_flags_horizontal` and `size_flags_vertical`.
     fn size_flags_changed(&self) -> SignalFuture<()>;
+    /// Emitted when the `NOTIFICATION_THEME_CHANGED` notification is sent.
     fn theme_changed(&self) -> SignalFuture<()>;
 
     fn focus_entered_fallible(&self) -> FallibleSignalFuture<()>;
