@@ -8,6 +8,7 @@ pub mod classes {
     pub mod animated_sprite;
     pub mod audio;
     pub mod base_button;
+    pub mod canvas_item;
     pub mod control;
     pub mod node;
     pub mod scene_tree;

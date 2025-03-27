@@ -1,5 +1,5 @@
 use crate::{FallibleSignalFuture, Gd, Inherits, Signal, SignalFuture};
-use godot::classes::Node;
+use godot::classes::{Node, Node3D};
 
 pub trait NodeExt<T>
 where
@@ -145,5 +145,28 @@ where
     #[inline]
     fn tree_exited_fallible(&self) -> FallibleSignalFuture<()> {
         Signal::from_object_signal(self, "tree_exited").to_fallible_future::<()>()
+    }
+}
+
+pub trait Node3DExt<T>
+where
+    T: Inherits<Node3D>,
+{
+    /// Emitted when node visibility changes.
+    fn visibility_changed(&self) -> SignalFuture<()>;
+    fn visibility_changed_fallible(&self) -> FallibleSignalFuture<()>;
+}
+
+impl<T> Node3DExt<T> for Gd<T>
+where
+    T: Inherits<Node3D>,
+{
+    #[inline]
+    fn visibility_changed(&self) -> SignalFuture<()> {
+        Signal::from_object_signal(self, "visibility_changed").to_future::<()>()
+    }
+    #[inline]
+    fn visibility_changed_fallible(&self) -> FallibleSignalFuture<()> {
+        Signal::from_object_signal(self, "visibility_changed").to_fallible_future::<()>()
     }
 }

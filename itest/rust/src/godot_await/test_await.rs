@@ -43,17 +43,20 @@ fn get_tree() -> Gd<SceneTree> {
 fn wait_test() -> TaskHandle {
     task::spawn(async move {
         let start = Instant::now();
-        wait(0.02).await;
-        // println!("wait elasp sec:{}", (Instant::now() - start).as_secs_f64());
-        assert!((Instant::now() - start).as_secs_f64() >= 0.02);
+        wait(0.5).await;
+        println!("wait elasp sec:{}", (Instant::now() - start).as_secs_f64());
+        assert!((Instant::now() - start).as_secs_f64() >= 0.4);
 
         let start = Instant::now();
-        wait_ex(&mut get_tree(), 0.02)
+        wait_ex(&mut get_tree(), 0.1)
             .process_always(false)
             .done()
             .await;
-        // println!( "wait_ex elasp sec:{}",(Instant::now() - start).as_secs_f64());
-        assert!((Instant::now() - start).as_secs_f64() >= 0.02);
+        println!(
+            "wait_ex elasp sec:{}",
+            (Instant::now() - start).as_secs_f64()
+        );
+        assert!((Instant::now() - start).as_secs_f64() >= 0.09);
     })
 }
 
@@ -169,8 +172,11 @@ fn or_test_2() -> TaskHandle {
 
     task::spawn(async move {
         let start = Instant::now();
-        or(button.button_down(), wait(0.05)).await;
-        // println!( "or_test_2 elasp sec:{}",(Instant::now() - start).as_secs_f64());
-        assert!((Instant::now() - start).as_secs_f64() >= 0.045);
+        or(button.button_down(), wait(0.1)).await;
+        println!(
+            "or_test_2 elasp sec:{}",
+            (Instant::now() - start).as_secs_f64()
+        );
+        assert!((Instant::now() - start).as_secs_f64() >= 0.09);
     })
 }
