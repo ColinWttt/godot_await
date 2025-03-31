@@ -27,8 +27,8 @@ Using `godot_await`:
 
 Equivalent to:
 
-```php
-  // GDScript
+```GDScript
+  # GDScript
   await get_tree().create_timer(1.0).timeout
 ```
 
@@ -38,8 +38,7 @@ Equivalent to:
       .get_main_loop().unwrap()
       .cast::<SceneTree>().unwrap()
       .create_timer(1.0).unwrap();
-  let signal = Signal::from_object_signal(&timer, "timeout");
-  signal.to_future::<()>().await;
+  timer.signals().timeout().to_future().await;
 ```
 
 ### Wait for tween finished
@@ -52,15 +51,14 @@ Using `godot_await`:
 
 Equivalent to
 
-```php
-  // GDScript
+```GDScript
+  # GDScript
   await tween.finished
 ```
 
 ```rust
   // Rust (without godot_await)
-  let signal = Signal::from_object_signal(&tween, "finished");
-  signal.to_future::<()>().await;
+  tween.signals().finished().to_future().await;
 ```
 
 ### The `_fallible` suffix
